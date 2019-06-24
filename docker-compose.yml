@@ -1,0 +1,26 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo
+    command: --smallfiles
+  app:
+    image: jaswanth1234/muzix_image:1.0.0
+#    build:
+#      context: .
+    ports:
+    - 8079:8079
+    links:
+    - mongodb
+  mongo-express:
+    image: mongo-express
+    environment:
+      - ME_CONFIG_OPTIONS_EDITORTHEME=ambiance
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=root
+      - ME_CONFIG_BASICAUTH_PASSWORD=devroot
+
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8081"
